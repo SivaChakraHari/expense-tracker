@@ -181,28 +181,112 @@ void Tracker :: resetTracker()
     cout<<"Tracker resetted\n\n";
 }
 
+string takeValidName()
+{
+    string input;
+    cout<<"Enter name of an expense:\n";
+    cin>>input;
+    return input;
+}
+
+long long takeValidAmount()
+{
+    long long amount;
+    cout<<"Enter amount: ";
+    cin>>amount;
+    return amount;
+}
+
+int takeValidDate()
+{
+    int date;
+    cout<<"Enter date: ";
+    cin>>date;
+    return date;
+}
+
+void displayIntro()
+{
+    cout<<"This is a expense tracker\n"
+        <<"In this you able record,see and manage your expenses\n\n";
+}
+
+void showMenu()
+{
+    cout<<"Menu:\n\n"
+        <<"1)Add expenses\n"
+        <<"2)Remove expense\n"
+        <<"3)Show all expenses\n"
+        <<"4)Show certain expense\n"
+        <<"5)Show expenses in between dates\n"
+        <<"6)Show total amount\n"
+        <<"7)Reset tracker\n"
+        <<"8)Exit\n\n";
+}
+
+void menu(Tracker & t)
+{
+    int choice;
+    do
+    {
+        showMenu();
+        cout<<"Enter choice:";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1:
+            {
+                string name=takeValidName();
+                long long amount=takeValidAmount();
+                int date=takeValidDate();
+                t.addExpense(name,amount,date);
+                break;
+            }
+            case 2:
+            {
+                string name=takeValidName();
+                long long amount=takeValidAmount();
+                int date=takeValidDate();
+                t.removeExpense(name,amount,date);
+                break;
+            }
+            case 3:
+                t.showAllExpenses();
+                break;
+            case 4:
+            {
+                string name=takeValidName();
+                t.showCertainExpense(name);
+                break;
+            }
+            case 5:
+            {
+                int date1=takeValidDate();
+                int date2=takeValidDate();
+                t.showExpensesInDates(date1,date2);
+                break;
+            }
+            case 6:
+                t.showTotalExpensesAmount();
+                break;
+            case 7:
+                t.resetTracker();
+                break;
+            case 8:
+                cout<<"Exiting......\n\n";
+                break;
+            default:
+                cout<<"Invalid choice\n"
+                    <<"Try again\n\n";
+
+        }
+    } while(choice!=8);
+    
+}
+
 int main()
 {
-    Tracker t;
-    t.showAllExpenses();
-    t.removeExpense("Books",200,23);
-    t.addExpense("Books",2000,23);
-    t.addExpense("Food",1000,24);
-    t.addExpense("Grocery",500,29);
-    t.showCertainExpense("Food");
-    t.showAllExpenses();
-    t.showTotalExpensesAmount();
-    t.showExpensesInDates(23,24);
-    t.removeExpense("Books",2000,23);
-    t.showAllExpenses();
-    t.removeExpense("Food",40,4);
-    t.showAllExpenses();
-    t.removeExpense("Food",1000,24);
-    t.showCertainExpense("Food");
-    t.showAllExpenses();
-    t.showTotalExpensesAmount();
-    t.showCertainExpense("Food");
-    t.showExpensesInDates(25,26);
-    t.resetTracker();
-    t.showAllExpenses();
+    Tracker tracker;
+    displayIntro();
+    menu(tracker);
 }
